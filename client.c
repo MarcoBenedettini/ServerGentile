@@ -10,19 +10,23 @@ int main(int argc, char const* argv[])
 {
     int status, valread, client_fd;
     struct sockaddr_in serv_addr;
-    char* hello = "Hello from client";
+    
+	char hello[100];
+    printf("inserisci messag");
+    scanf("%s", &hello);
+    
     char buffer[1024] = { 0 };
-    if ((client_fd = socket(AF_LOCAL, SOCK_STREAM, 0)) < 0) {
+    if ((client_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         printf("\n Socket creation error \n");
         return -1;
     }
 
-    serv_addr.sin_family = AF_LOCAL;
+    serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(PORT);
 
     // Convert IPv4 and IPv6 addresses from text to binary
     // form
-    if (inet_pton(AF_LOCAL, "127.0.0.1", &serv_addr.sin_addr)
+    if (inet_pton(AF_INET, "192.168.0.76", &serv_addr.sin_addr)
         <= 0) {
         printf(
             "\nInvalid address/ Address not supported \n");
