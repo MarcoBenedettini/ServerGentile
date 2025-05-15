@@ -37,15 +37,18 @@ int main(int argc, char const* argv[])
 
     printf("\tConnessione con server avvenuta con successo\n\tBenvenuto nella chat\n\n");
     
-    while (1) {
-        char msg[100];
-        fgets(msg, 100, stdin);
 
-        send(client_fd, msg, strlen(msg), 0);
-        printf("-- Messaggio inviato --\n\n");
+    char msg[100];
+    fgets(msg, 100, stdin);
+
+    send(client_fd, msg, strlen(msg), 0);
+    printf("-- Messaggio inviato --\n\n");
         
-        strcpy(msg, "");
-    }
+    strcpy(msg, "");
+	
+	read(client_fd, buffer, 1024);
+	printf("risposta dal server: %s\n", buffer);
+
     // closing the connected socket
     close(client_fd);
     return 0;

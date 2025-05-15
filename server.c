@@ -17,6 +17,16 @@ int main(int argc, char const* argv[])
     socklen_t addrlen = sizeof(address);
     char buffer[1024] = { 0 };
 
+	char *responses[] = {
+        "Sei così carina",
+		"Bel messaggio, buona giornata!",
+		"Ti ringrazio per avermi scritto!",
+		"Grazie, come sei gentile!"
+    };
+	
+	srand(time(NULL));
+	int selected_response = rand() % 4;
+	
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(PORT);
@@ -46,10 +56,12 @@ int main(int argc, char const* argv[])
     printf("Qualcuno si e' connesso!\n\n");
 
     ssize_t msg;   
-    while (1) {
-        msg = read(new_socket, buffer, 1024 - 1);
-        printf("Client 1:\n\t%s\n", buffer);
-    }
+	
+    msg = read(new_socket, buffer, 1024 - 1);
+    printf("Client 1:\n\t%s\n", buffer);
+
+	send(new_socket, responses[selected_response], strlen(responses[selected_response]), 0);
+    printf("Risposta inviata.\n");
   
     close(new_socket);
     close(server_fd);
